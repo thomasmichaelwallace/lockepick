@@ -47,6 +47,7 @@ const (
 	Empty2         // [Interceptor] (Terra) *cannot fight during battle*
 	Empty3         // [Opera Celes] (Celes) *cannot fight during battle*
 	Empty4         //  [Scholar] (Glitch) *will hang the game when fighting*
+	None           = 255
 )
 
 var cname = map[CharId]string{
@@ -78,6 +79,7 @@ var cname = map[CharId]string{
 	Empty2:         "Empty2",
 	Empty3:         "Empty3",
 	Empty4:         "Empty4",
+	None:           "",
 }
 
 func (c *CharId) UnmarshalJSON(data []byte) error {
