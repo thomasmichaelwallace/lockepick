@@ -71,7 +71,7 @@ type (
 	Body2 struct {
 		Unknown41 [1028]uint8 //`json:"-"`
 		Names     [16]CharacterName
-		Unknown5  [736]uint8 //`json:"-"`
+		Unknown5  [760]uint8 //`json:"-"`
 	}
 
 	Save struct {
@@ -79,7 +79,7 @@ type (
 		Body       Body
 		Iv         Iv
 		Body2      Body2
-		Allzeroes2 [15212]byte `json:"-"`
+		Allzeroes2 [15188]byte `json:"-"`
 	}
 
 	FileHeader struct {
