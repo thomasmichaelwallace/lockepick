@@ -1,0 +1,16 @@
+{
+  "name": "lockepick",
+  "version": "1.0.0",
+  "description": "ff6 (steam) save editor",
+  "repository": "git@github.com:thomasmichaelwallace/lockepick.git",
+  "author": "thomasmichaelwallace <thomasmichaelwallace@gmail.com>",
+  "license": "BSD-2",
+  "private": true,
+  "scripts": {
+    "build": "yarn webpack"
+  },
+  "devDependencies": {
+    "webpack": "^5.1.0",
+    "webpack-cli": "^4.0.0"
+  }
+}
