@@ -38,7 +38,7 @@ type (
 	}
 	Body struct {
 		Characters   [16]Character
-		Unknown2     [16]byte //`json:"-"`
+		Parties      Party
 		Gil          uint24
 		Time         Time
 		Steps        uint24
