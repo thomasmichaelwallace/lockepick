@@ -23,7 +23,7 @@ func tojson() error {
 		return err
 	}
 	
-	d, err := tojsonbytes(data)
+	d, err := Tojsonbytes(data)
 	if err != nil {
 		return err
 	}
@@ -37,7 +37,7 @@ func fromjson() error {
 		return err
 	}
 
-	s, err := fromjsonbytes(data)
+	s, err := Fromjsonbytes(data)
 	if err != nil {
 		return err
 	}

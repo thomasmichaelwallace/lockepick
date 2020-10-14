@@ -9,6 +9,7 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"hash/crc32"
+	"github.com/gopherjs/gopherjs/js"
 )
 
 // http://www.gamefaqs.com/snes/554041-final-fantasy-iii/faqs/11544 for basics,
@@ -254,7 +255,7 @@ func (n *String16) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func tojsonbytes(data []byte) ([]byte, error) {
+func Tojsonbytes(data []byte) ([]byte, error) {
 	f := bytes.NewReader(data);
 
 	var s SaveFile
@@ -270,11 +271,16 @@ func tojsonbytes(data []byte) ([]byte, error) {
 	return d, nil
 }
 
-func fromjsonbytes(data []byte) ([]byte, error) {
+func Fromjsonbytes(data []byte) ([]byte, error) {
 	var s SaveFile
 	err := json.Unmarshal(data, &s)
 	if err != nil {
 		return nil, err
 	}
 	return s.Encode(), nil
+}
+
+func main() {
+	js.Module.Get("exports").Set("fromJsonBytes", Fromjsonbytes)
+	js.Module.Get("exports").Set("tojsonbytes", Tojsonbytes)
 }
