@@ -268,18 +268,29 @@ var (
 	jsonfile = "filesRockDat0.json"
 )
 
-func tojson() error {
-	f, err := os.Open(savfile)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
+func tojsonbytes(data []byte) ([]byte, error) {
+	f := bytes.NewReader(data);
+
 	var s SaveFile
 	if err := binary.Read(f, binary.LittleEndian, &s); err != nil {
-		return err
+		return nil, err
 	}
 
 	d, err := json.MarshalIndent(s, "", "\t")
+	if err != nil {
+		return nil, err
+	}
+
+	return d, nil
+}
+
+func tojson() error {
+	data, err := ioutil.ReadFile(savfile)
+	if err != nil {
+		return err
+	}
+	
+	d, err := tojsonbytes(data)
 	if err != nil {
 		return err
 	}
@@ -287,13 +298,23 @@ func tojson() error {
 	return ioutil.WriteFile(jsonfile, d, 0644)
 }
 
+func fromjsonbytes(data []byte) ([]byte, error) {
+	var s SaveFile
+	err := json.Unmarshal(data, &s)
+	if err != nil {
+		return nil, err
+	}
+	return s.Encode(), nil
+}
+
 func fromjson() error {
 	data, err := ioutil.ReadFile(jsonfile)
 	if err != nil {
 		return err
 	}
-	var s SaveFile
-	if err := json.Unmarshal(data, &s); err != nil {
+
+	s, err := fromjsonbytes(data)
+	if err != nil {
 		return err
 	}
 	_, err = os.Stat(savfile)
@@ -303,7 +324,7 @@ func fromjson() error {
 			os.Rename(savfile, savfile+".bak")
 		}
 	}
-	return ioutil.WriteFile(savfile, s.Encode(), 0644)
+	return ioutil.WriteFile(savfile, s, 0644)
 }
 
 func main() {
