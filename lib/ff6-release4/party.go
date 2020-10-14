@@ -8,9 +8,7 @@ import "encoding/json"
 
 type (
 	Party             [16]CharacterPosition
-
 	CharacterPosition uint8
-
 	jsonCP            struct {
 		DisplayOnWorldMap bool
 		Enabled           bool
@@ -18,8 +16,6 @@ type (
 		Slot              uint8
 		Group             uint8
 	}
-
-	// Parties [4]CharId
 )
 
 
@@ -38,51 +34,6 @@ const (
 	Back          = 1 << FrontBackShift
 )
 
-// func (p Party) MarshalJSON() ([]byte, error) {
-// 	var s [3]Parties
-// 	for i := range s {
-// 		for j := range s[i] {
-// 			s[i][j] = None
-// 		}
-// 	}
-// 	for i, cp := range p {
-// 		if !cp.Enabled() {
-// 			continue
-// 		}
-// 		g := cp.Group()
-// 		if g == 0 {
-// 			continue
-// 		}
-// 		s[g-1][cp.Slot()] = CharId(i)
-// 	}
-// 	return json.Marshal(s)
-// }
-
-// func (p *Party) UnmarshalJSON(data []byte) error {
-// 	var (
-// 		s     [3]Parties
-// 		leads = []CharId{None, None, None}
-// 	)
-
-// 	if err := json.Unmarshal(data, &s); err != nil {
-// 		return err
-// 	}
-// 	for i := range s {
-// 		for j, v := range s[i] {
-// 			if v != None && v < 16 {
-// 				p[v].SetEnabled(true)
-// 				p[v].SetGroup(i + 1)
-// 				p[v].SetSlot(j)
-// 				if leads[i] == None {
-// 					leads[i] = v
-// 					p[v].SetDisplayOnWorldMap(true)
-// 				}
-// 			}
-// 		}
-// 	}
-// 	return nil
-// }
-
 func (cp *CharacterPosition) SetEnabled(b bool) {
 	if b {
 		*cp |= EnabledMask
@@ -95,7 +46,7 @@ func (cp CharacterPosition) Enabled() bool {
 	return (cp & EnabledMask) != 0
 }
 
-func (cp *CharacterPosition) SetSlot(s int) {
+func (cp *CharacterPosition) SetSlot(s uint8) {
 	*cp &^= SlotMask
 	*cp |= CharacterPosition((s << SlotShift) & SlotMask)
 }
@@ -104,7 +55,7 @@ func (cp CharacterPosition) Slot() uint8 {
 	return uint8((cp & SlotMask) >> SlotShift)
 }
 
-func (cp *CharacterPosition) SetGroup(g int) {
+func (cp *CharacterPosition) SetGroup(g uint8) {
 	*cp &^= GroupMask
 	*cp |= CharacterPosition(g & GroupMask)
 }
@@ -141,14 +92,12 @@ func (cp *CharacterPosition) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*cp = 0
-	if j.DisplayOnWorldMap {
-		*cp |= DisplayMask
-	}
+	cp.SetDisplayOnWorldMap(j.DisplayOnWorldMap)
 	cp.SetEnabled(j.Enabled)
 	if !j.Front {
 		*cp |= Back
 	}
-	*cp |= CharacterPosition(((j.Slot) << SlotShift) & SlotMask)
-	*cp |= CharacterPosition((j.Group & 3))
+	cp.SetSlot(j.Slot)
+	cp.SetGroup(j.Group)
 	return nil
 }
