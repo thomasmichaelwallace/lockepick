@@ -4,14 +4,18 @@
 <head>
   <meta charset=utf-8>
   <title>locke pick</title>
+
+  <link href="./css/jsoneditor.css" rel="stylesheet" type="text/css">
+  <link href="./css/index.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-  <input id="inputFile" type="file" />
-  <textarea id="jsonView">
-    [json will appear here]
-  </textarea>
-  <input id="downloadFile" type="button" />
+  <ul id="menu">
+    <li><input id="inputFile" type="file" /></li>
+    <li><input id="downloadFile" type="button" value="Save file" /></li>
+  </ul>
+
+  <div id="jsonEditor"></div>
 
   <script src="./dist/main.js"></script>
 </body>

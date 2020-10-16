@@ -7,10 +7,14 @@
   "license": "BSD-2",
   "private": true,
   "scripts": {
-    "build": "yarn webpack"
+    "build": "yarn webpack",
+    "serve": "python3 -m http.server"
   },
   "devDependencies": {
     "webpack": "^5.1.0",
     "webpack-cli": "^4.0.0"
+  },
+  "dependencies": {
+    "jsoneditor": "^9.1.1"
   }
 }

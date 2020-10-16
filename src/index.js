@@ -1,6 +1,7 @@
+const JSONEditor = require('jsoneditor');
 const ff6 = require('../lib/ff6-release4-js/ff6-release4');
 
-const jsonView = document.getElementById('jsonView');
+const container = document.getElementById("jsonEditor")
 const inputFile = document.getElementById('inputFile');
 const downloadFile = document.getElementById('downloadFile');
 
@@ -24,6 +25,12 @@ export function saveFile(blob, filename) {
 }
 
 function init() {
+  /* json editor */
+  const options = {}
+  const editor = new JSONEditor(container, options)
+  editor.set({ todo: 'open file to edit' })
+
+  /* upload */
   inputFile.addEventListener('change', (e) => {
     if (inputFile.files.length === 1) {
       console.log('reading...');
@@ -37,17 +44,19 @@ function init() {
           console.log(jsonBytes);
           const json = JSON.parse((new TextDecoder()).decode(jsonBytes));
           console.log('writing');
-          jsonView.value = JSON.stringify(json, null, 2);
+          editor.set(json);
         })
         .catch((e) => console.error(e));
     }
-    console.log('event', inputFile, e);
   })
+
+  /* download */
   downloadFile.addEventListener('click', (e) => {
-    const bytes = (new TextEncoder()).encode(jsonView.value);
+    const json = editor.get();
+    const bytes = (new TextEncoder()).encode(JSON.stringify(json));
     let [data] = ff6.fromJsonBytes(bytes)
     const blob = new Blob([data], { type: 'application/octet-stream' });
-    saveFile(blob, 'data_two');
+    saveFile(blob, 'data');
   });
 }
 
