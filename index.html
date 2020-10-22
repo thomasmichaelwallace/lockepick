@@ -3,20 +3,74 @@
 
 <head>
   <meta charset=utf-8>
-  <title>locke pick</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>LockePick - FF6 Save Editor</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  <script defer src="https://use.fontawesome.com/releases/v5.14.0/js/all.js"></script>
 
   <link href="./css/jsoneditor.css" rel="stylesheet" type="text/css">
   <link href="./css/index.css" rel="stylesheet" type="text/css">
 </head>
 
 <body>
-  <ul id="menu">
-    <li><input id="inputFile" type="file" /></li>
-    <li><input id="downloadFile" type="button" value="Save file" /></li>
-  </ul>
+  <div class="columns is-full-height p-1 m-0">
+    <div class="column is-full-height">
+      <div id="jsonEditor"></div>
+    </div>
 
-  <div id="jsonEditor"></div>
+    <div class="column is-one-quarter">
 
+      <div class="tile is-ancestor">
+        <div class="tile is-12 is-vertical is-parent">
+
+          <div id="help" class="tile is-child box">
+            <p class="title">LockePick</p>
+            <p class="subtitle">FF6 Save Editor</p>
+            <p>A rough guide:</p>
+            <div class="content">
+              <ul>
+                <li>Upload your save file (probably at: <span class="is-family-monospace is-broken">C:/Program Files (x86)/steam/userdata/{userid}/382900/local</span>)</li>
+                <li>Using the JSON editor make the changes you want to the file.</li>
+                <li>One finished, button to download your altered save file.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div id="file-interaction" class="tile is-child box">
+            <div class="field is-grouped">
+              <p class="control file is-primary">
+                <label class="file-label">
+                  <input id="inputFile" class="file-input" type="file" name="save-file">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      Upload
+                    </span>
+                  </span>
+                </label>
+              </p>
+      
+              <p class="control"></p>
+                <button id="downloadFile" class="button is-info">
+                  <span class="icon">
+                    <i class="fas fa-download"></i>
+                  </span>
+                  <span>Download</span>
+                </button>
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- scripts -->
   <script src="./dist/main.js"></script>
 </body>
 

@@ -1,26 +1,17 @@
 html, body {
   width: 100%;
   height: 100%;
-  margin: 0;
 }
 
-#menu {
-  height: 20px;
-  margin: 0;
-  padding: 0;
+.is-full-height {
+  height: 100%;
 }
 
-ul#menu {
-  list-style-type: none;
-  padding: 5px;
-}
-
-ul#menu li {
-  display: inline-block;
-  width: 200px;
+.is-broken {
+  word-break: break-all;
 }
 
 #jsonEditor {
   width: 100%;
-  height: calc(100% - 30px);
+  height:100%;
 }
