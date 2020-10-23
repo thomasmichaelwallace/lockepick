@@ -1,63 +1,8 @@
-const JSONEditor = require('jsoneditor');
-const ff6 = require('../lib/ff6-release4-js/ff6-release4');
-
-const container = document.getElementById("jsonEditor")
-const inputFile = document.getElementById('inputFile');
-const downloadFile = document.getElementById('downloadFile');
-
-// Start file download.
-
-export function saveFile(blob, filename) {
-  if (window.navigator.msSaveOrOpenBlob) {
-    window.navigator.msSaveOrOpenBlob(blob, filename);
-  } else {
-    const a = document.createElement('a');
-    document.body.appendChild(a);
-    const url = window.URL.createObjectURL(blob);
-    a.href = url;
-    a.download = filename;
-    a.click();
-    setTimeout(() => {
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    }, 0);
-  }
-}
+import * as editor from './actions/editor';
+import * as files from './actions/files';
 
 function init() {
-  /* json editor */
-  const options = {}
-  const editor = new JSONEditor(container, options)
-  editor.set({ todo: 'open file to edit' })
-
-  /* upload */
-  inputFile.addEventListener('change', (e) => {
-    if (inputFile.files.length === 1) {
-      console.log('reading...');
-      inputFile.files[0].arrayBuffer()
-        .then((a) => {
-          console.log('read');
-          const bytes = new Int8Array(a);
-          console.log('to json bytes...')
-          const [jsonBytes] = ff6.toJsonBytes(bytes);
-          console.log('got bytes; parsing...');
-          console.log(jsonBytes);
-          const json = JSON.parse((new TextDecoder()).decode(jsonBytes));
-          console.log('writing');
-          editor.set(json);
-        })
-        .catch((e) => console.error(e));
-    }
-  })
-
-  /* download */
-  downloadFile.addEventListener('click', (e) => {
-    const json = editor.get();
-    const bytes = (new TextEncoder()).encode(JSON.stringify(json));
-    let [data] = ff6.fromJsonBytes(bytes)
-    const blob = new Blob([data], { type: 'application/octet-stream' });
-    saveFile(blob, 'data');
-  });
+  editor.init();
+  files.init();
 }
-
 init();
