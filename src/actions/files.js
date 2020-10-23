@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 import * as ff6 from '../../lib/ff6-release4-js/ff6-release4';
 import saveFile from '../utilities/saveFile';
-import { getData, setData } from '../utilities/state';
+import { getData, setAdvancedMode, setData } from '../utilities/state';
 
 const uploadButton = document.getElementById('upload-file');
 const downloadButton = document.getElementById('download-file');
+const advancedInput = document.getElementById('advanced-mode');
 
 async function handleUploadFile() {
   try {
@@ -41,8 +42,14 @@ async function handleDownloadFile() {
   }
 }
 
+function handleAdvancedChange(e) {
+  const isAdvanced = e.srcElement.checked;
+  setAdvancedMode(isAdvanced);
+}
+
 // eslint-disable-next-line import/prefer-default-export
 export function init() {
   uploadButton.addEventListener('change', handleUploadFile);
   downloadButton.addEventListener('click', handleDownloadFile);
+  advancedInput.addEventListener('change', handleAdvancedChange);
 }
