@@ -304,6 +304,7 @@ const statIncrements = {
   },
 };
 const statBase = { // [hp, mp]
+  /* cSpell:disable */
   Terra: [40, 16],
   Locke: [48, 7],
   Cyan: [53, 5],
@@ -318,6 +319,7 @@ const statBase = { // [hp, mp]
   Gau: [45, 10],
   Gogo: [36, 12],
   Umaro: [60, 0],
+  /* cSpell:enable */
 };
 
 function handler() {
