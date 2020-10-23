@@ -1,4 +1,5 @@
 import JSONEditor from 'jsoneditor';
+import getOptions from '../utilities/getOptions';
 import schema from '../utilities/schema.json';
 
 const element = document.getElementById('json-editor');
@@ -17,12 +18,17 @@ export function enableSchema(isEnabled) {
   if (isEnabled) {
     editor.setSchema(schema);
   } else {
-    editor.setSchema(null); // ?
+    editor.setSchema(null);
   }
 }
 
 export function init() {
-  const options = {};
+  const autocomplete = {
+    filter: 'contain',
+    caseSensitive: false,
+    getOptions,
+  };
+  const options = { autocomplete };
   editor = new JSONEditor(element, options);
   editor.set({ todo: 'upload file to start editing' });
   enableSchema(true);

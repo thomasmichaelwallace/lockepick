@@ -1,53 +1,56 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "definitions": {
+    "characterId": {
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "Terra",
+            "Locke",
+            "Cyan",
+            "Shadow",
+            "Edgar",
+            "Sabin",
+            "Celes",
+            "Strago",
+            "Relm",
+            "Setzer",
+            "Mog",
+            "Gau",
+            "Gogo",
+            "Umaro",
+            "Vicks_Wedge",
+            "Imp",
+            "Leo",
+            "Banon",
+            "EsperTerra",
+            "MerchantLocke",
+            "Ghost",
+            "Kefka",
+            "EmperorGestahl",
+            "SoldierLocke",
+            "Empty1",
+            "Empty2",
+            "Empty3",
+            "Empty4",
+            ""
+          ]
+        },
+        {
+          "type": "string",
+          "pattern": "^\\d+$"
+        }
+      ]
+    },
     "character": {
       "type": "object",
       "properties": {
         "Id": {
-          "anyOf": [
-            {
-              "type": "string",
-              "enum": [
-                "Terra",
-                "Locke",
-                "Cyan",
-                "Shadow",
-                "Edgar",
-                "Sabin",
-                "Celes",
-                "Strago",
-                "Relm",
-                "Setzer",
-                "Mog",
-                "Gau",
-                "Gogo",
-                "Umaro",
-                "Vicks_Wedge",
-                "Imp",
-                "Leo",
-                "Banon",
-                "EsperTerra",
-                "MerchantLocke",
-                "Ghost",
-                "Kefka",
-                "EmperorGestahl",
-                "SoldierLocke",
-                "Empty1",
-                "Empty2",
-                "Empty3",
-                "Empty4",
-                ""
-              ]
-            },
-            {
-              "type": "string",
-              "pattern": "^\\d+$"
-            }
-          ]
+          "$ref": "#/definitions/characterId"
         },
         "Portrait": {
-          "type": "string"
+          "$ref": "#/definitions/characterId"
         },
         "Level": {
           "type": "integer"
@@ -2741,7 +2744,8 @@
           },
           "required": [
             "SortingOrder"
-          ]
+          ],
+          "additionalProperties": false
         },
         "Names": {
           "type": "array",
