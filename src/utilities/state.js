@@ -88,4 +88,5 @@ export function setAdvancedMode(isAdvanced) {
   getData(); // save editor data
   isSimple = !isAdvanced;
   setData(data); // reload editor state
+  editor.enableSchema(isSimple);
 }
