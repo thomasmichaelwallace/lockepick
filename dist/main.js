@@ -99,6 +99,21 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 
 /***/ }),
 
+/***/ "./src/actions/minItems.js":
+/*!*********************************!*\
+  !*** ./src/actions/minItems.js ***!
+  \*********************************/
+/*! namespace exports */
+/*! export init [provided] [no usage info] [missing usage info prevents renaming] */
+/*! other exports [not provided] [no usage info] */
+/*! runtime requirements: __webpack_require__, __webpack_require__.r, __webpack_exports__, __webpack_require__.d, __webpack_require__.* */
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"init\": () => /* binding */ init\n/* harmony export */ });\n/* harmony import */ var _utilities_state__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../utilities/state */ \"./src/utilities/state.js\");\n\n/* eslint-disable no-console */\n\nconst input = document.getElementById('value-min-items');\nconst orderKey = 'SortingOrder';\nconst nothingName = 'Nothing';\n\nfunction handler() {\n  const count = Number.parseInt(input.value, 10);\n\n  if (Number.isNaN(count) || count < 1 || count > 99) {\n    console.error('min items must be between 0-100');\n    return;\n  }\n\n  const data = (0,_utilities_state__WEBPACK_IMPORTED_MODULE_0__.getData)();\n  const slotIndex = (0,_utilities_state__WEBPACK_IMPORTED_MODULE_0__.getSlotIndex)();\n  const slot = data.Saves[slotIndex];\n  const invetory = slot.Iv.Inventory;\n  Object.keys(invetory).filter(k => k !== orderKey && k !== nothingName).forEach(k => {\n    invetory[k] = Math.max(invetory[k], count);\n  });\n  (0,_utilities_state__WEBPACK_IMPORTED_MODULE_0__.setData)(data);\n} // eslint-disable-next-line import/prefer-default-export\n\n\nfunction init() {\n  const button = document.getElementById('set-min-items');\n  button.addEventListener('click', handler);\n}\n\n//# sourceURL=webpack://my-webpack-project/./src/actions/minItems.js?");
+
+/***/ }),
+
 /***/ "./src/actions/minLevel.js":
 /*!*********************************!*\
   !*** ./src/actions/minLevel.js ***!
@@ -139,7 +154,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpac
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _actions_allItems__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions/allItems */ \"./src/actions/allItems.js\");\n/* harmony import */ var _actions_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./actions/editor */ \"./src/actions/editor.js\");\n/* harmony import */ var _actions_files__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./actions/files */ \"./src/actions/files.js\");\n/* harmony import */ var _actions_fixItems__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./actions/fixItems */ \"./src/actions/fixItems.js\");\n/* harmony import */ var _actions_minLevel__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/minLevel */ \"./src/actions/minLevel.js\");\n/* harmony import */ var _actions_quickSpell__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions/quickSpell */ \"./src/actions/quickSpell.js\");\n\n\n\n\n\n\n\nfunction init() {\n  // main\n  _actions_editor__WEBPACK_IMPORTED_MODULE_1__.init();\n  _actions_files__WEBPACK_IMPORTED_MODULE_2__.init(); // utilities\n\n  _actions_minLevel__WEBPACK_IMPORTED_MODULE_4__.init();\n  _actions_quickSpell__WEBPACK_IMPORTED_MODULE_5__.init();\n  _actions_allItems__WEBPACK_IMPORTED_MODULE_0__.init();\n  _actions_fixItems__WEBPACK_IMPORTED_MODULE_3__.init();\n}\n\ninit();\n\n//# sourceURL=webpack://my-webpack-project/./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _actions_allItems__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./actions/allItems */ \"./src/actions/allItems.js\");\n/* harmony import */ var _actions_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./actions/editor */ \"./src/actions/editor.js\");\n/* harmony import */ var _actions_files__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./actions/files */ \"./src/actions/files.js\");\n/* harmony import */ var _actions_fixItems__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./actions/fixItems */ \"./src/actions/fixItems.js\");\n/* harmony import */ var _actions_minItems__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./actions/minItems */ \"./src/actions/minItems.js\");\n/* harmony import */ var _actions_minLevel__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./actions/minLevel */ \"./src/actions/minLevel.js\");\n/* harmony import */ var _actions_quickSpell__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./actions/quickSpell */ \"./src/actions/quickSpell.js\");\n\n\n\n\n\n\n\n\nfunction init() {\n  // main\n  _actions_editor__WEBPACK_IMPORTED_MODULE_1__.init();\n  _actions_files__WEBPACK_IMPORTED_MODULE_2__.init(); // utilities\n\n  _actions_minLevel__WEBPACK_IMPORTED_MODULE_5__.init();\n  _actions_quickSpell__WEBPACK_IMPORTED_MODULE_6__.init();\n  _actions_allItems__WEBPACK_IMPORTED_MODULE_0__.init();\n  _actions_fixItems__WEBPACK_IMPORTED_MODULE_3__.init();\n  _actions_minItems__WEBPACK_IMPORTED_MODULE_4__.init();\n}\n\ninit();\n\n//# sourceURL=webpack://my-webpack-project/./src/index.js?");
 
 /***/ }),
 
