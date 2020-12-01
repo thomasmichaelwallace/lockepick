@@ -5,7 +5,7 @@ An online FF6 PC (Steam) save editor.
 ## Usage
 
 1. Open the web application: https://www.thomasmichaelwallace.com/lockepick/
-1. On the top bar use the 'Choose file' button to load your FF6 save file (probably at: `C:/Program Files (x86)/steam/userdata/{userid}/382900/local`)
+1. On the side bar use the 'Upload file' button to load your FF6 save file (probably at: `C:/Program Files (x86)/steam/userdata/{userid}/382900/local`)
 1. Using the JSON editor make the changes you want to the file:
     1. By editing the JSON objects directly
     1. By using the utilities on the selected save slot
