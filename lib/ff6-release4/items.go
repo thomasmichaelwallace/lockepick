@@ -2,6 +2,9 @@
 // Use of this source code is governed by a 2-clause
 // BSD-style license that can be found in the LICENSE file.
 
+// see: https://gamefaqs.gamespot.com/gba/930370-final-fantasy-vi-advance/faqs/47000
+// for item listing and offsets
+
 package main
 
 import (
@@ -615,6 +618,7 @@ func (e *Equipable) UnmarshalJSON(data []byte) error {
 }
 
 func (i Item) MarshalJSON() ([]byte, error) {
+	// note at Equipable must be already be redirected to Item
 	return json.Marshal(iname[i])
 }
 
@@ -629,6 +633,13 @@ func (i *Item) UnmarshalJSON(data []byte) error {
 			return nil
 		}
 	}
+	for k, v := range eqname {
+		if v == s {
+			// Redirect Equipable name to Item
+			*i = Item(k) - RenameCard
+			return nil
+		}
+	}
 	return fmt.Errorf("\"%s\" isn't a known Item", s)
 }
 
@@ -638,26 +649,58 @@ func (inv *Inventory) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
+	// unmarshal will deal with converting Equipable back to their equivilent Item
+	// however this is lossy, and we need to know the original so we can apply
+	// the count > 128 indicator
+	var names [288]string
+	if err := json.Unmarshal(d["SortingOrder"], &names); err != nil {
+		return err
+	}
+
 	if err := json.Unmarshal(d["SortingOrder"], &inv.SortOrder); err != nil {
 		return err
 	}
-	for i, k := range inv.SortOrder {
-		if err := json.Unmarshal(d[iname[k]], &inv.Count[i]); err != nil {
+	for i, _ := range inv.SortOrder {
+		n := names[i]
+		var count uint8
+		if err := json.Unmarshal(d[n], &count); err != nil {
 			return err
 		}
-	}
-	for i := 256; i < len(inv.Count); i++ {
-		inv.Count[i] = 0
-		inv.SortOrder[i] = 0xff
+		for _, v := range eqname {
+			// eq range item
+			if v == n {
+				count += 128
+			}
+		}
+		inv.Count[i] = count
 	}
 	return nil
 }
 
 func (inv Inventory) MarshalJSON() ([]byte, error) {
 	d := make(map[string]interface{})
-	d["SortingOrder"] = &inv.SortOrder
-	for i, k := range inv.SortOrder {
-		d[iname[k]] = inv.Count[i]
+
+	var sortingOrder [288]string
+	for i, _ := range sortingOrder {
+    sortingOrder[i] = iname[Nothing]
 	}
+
+	for i, k := range inv.SortOrder {
+		// The Equipable only range is unique in that it overwrites 0x00-0x0C
+		// but uses the quanity > 0x80 to differentiate between the original and
+		// Game Boy Advance (Equipable) item.
+		if (inv.Count[i] < 128 || k > 14) {
+			name := iname[k]
+			d[name] = inv.Count[i]
+			sortingOrder[i] = name
+		} else {
+			index := Equipable(k + RenameCard)
+			count := inv.Count[i] - 128
+			name := eqname[index]
+			d[name] = count
+			sortingOrder[i] = name
+		}
+	}
+	d["SortingOrder"] = sortingOrder
 	return json.Marshal(d)
 }
