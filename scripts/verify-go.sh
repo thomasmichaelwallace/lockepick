@@ -2,6 +2,9 @@
 
 set -e
 
+# GO > 1.16 uses modules by default
+export GO111MODULE=off
+
 cd ./lib/ff6-release4-bin
 rm -rf ./ff6-release4
 
